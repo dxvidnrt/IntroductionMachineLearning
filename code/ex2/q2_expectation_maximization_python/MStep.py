@@ -18,6 +18,9 @@ def MStep(gamma, X):
     # means          : Mean for each gaussian (KxD).
     # weights        : Vector of weights of each gaussian (1xK).
     # covariances    : Covariance matrices for each component(DxDxK).
+
+    #####Insert your code here for subtask 6c#####
+
     N, K = gamma.shape
     _, D = X.shape
 
@@ -50,5 +53,4 @@ def MStep(gamma, X):
 
     logLikelihood = getLogLikelihood(means, weights, covariances, X)
 
-    #####Insert your code here for subtask 6c#####
     return weights, means, covariances, logLikelihood
