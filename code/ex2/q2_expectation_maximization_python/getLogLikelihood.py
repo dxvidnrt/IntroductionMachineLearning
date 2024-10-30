@@ -1,5 +1,7 @@
 import numpy as np
 
+from helpers import prob_gaussian_multi_D
+
 
 def getLogLikelihood(means, weights, covariances, X):
     # Log Likelihood estimation
@@ -35,22 +37,10 @@ def getLogLikelihood(means, weights, covariances, X):
             # Mean and covariance for Gaussian k
             mean_k = means[k]
             cov_k = covariances[:, :, k]
-
-            # Calculate the determinant and inverse of the covariance matrix
-            det_cov_k = np.linalg.det(cov_k)
-            inv_cov_k = np.linalg.inv(cov_k)
-
-            # Compute the difference between x and the mean
-            diff = X[x, :] - mean_k  # Shape: (N, D)
-
-            # Calculate the exponent term for the Gaussian formula
-            exponent = -0.5 * np.sum(diff.T @ inv_cov_k @ diff)  # Shape: scalar
-
-            # Normalization constant for Gaussian
-            normalizer = (2 * np.pi) ** (D / 2) * np.sqrt(det_cov_k)
+            x_D = X[x, :]
 
             # Gaussian probability for each component
-            prob_k = np.exp(exponent) / normalizer  # Shape: (N,)
+            prob_k = prob_gaussian_multi_D(x_D, mean_k, cov_k)
 
             # Weighted probability
             weighted_prob_k = weights[k] * prob_k  # Shape: (N,)
